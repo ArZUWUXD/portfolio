@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maurt — Mauricio Ponce de León</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0e0e0e;
+      --bg2: #161616;
+      --text: #f0ede8;
+      --muted: #888;
+      --accent: #c8a96e;
+      --border: rgba(255,255,255,0.08);
+      --sans: 'DM Sans', sans-serif;
+      --serif: 'DM Serif Display', serif;
+      --radius: 4px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.5rem 3rem;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      letter-spacing: 0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-links a.contact-link {
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 0.45rem 1.1rem;
+      border-radius: var(--radius);
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .nav-links a.contact-link:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 6rem 3rem 4rem;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.78rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(3.5rem, 8vw, 7rem);
+      line-height: 1.0;
+      color: var(--text);
+      max-width: 700px;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 420px;
+      line-height: 1.7;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 2rem;
+      right: 3rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      writing-mode: vertical-rl;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-scroll::after {
+      content: '';
+      display: block;
+      width: 1px;
+      height: 48px;
+      background: var(--muted);
+      opacity: 0.4;
+    }
+
+    /* WORK SECTION */
+    #work {
+      padding: 6rem 3rem;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 3rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* PROJECT GRID */
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2px;
+    }
+
+    .project-card {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      background: var(--bg2);
+      cursor: pointer;
+      text-decoration: none;
+      display: block;
+    }
+
+    .project-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease, filter 0.4s ease;
+      filter: brightness(0.85);
+    }
+
+    .project-card:hover img {
+      transform: scale(1.04);
+      filter: brightness(0.65);
+    }
+
+    .project-info {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 2rem 1.75rem 1.5rem;
+      background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, transparent 100%);
+      transform: translateY(8px);
+      opacity: 0;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .project-card:hover .project-info {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .project-always {
+      position: absolute;
+      bottom: 1.25rem;
+      left: 1.75rem;
+    }
+
+    .project-name {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 0.25rem;
+    }
+
+    .project-type {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .project-desc {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.7);
+      margin-top: 0.5rem;
+      line-height: 1.5;
+    }
+
+    /* PLACEHOLDER for missing images */
+    .project-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      opacity: 0.15;
+      transition: transform 0.6s ease;
+    }
+
+    .project-card:hover .project-placeholder {
+      transform: scale(1.04);
+    }
+
+    .p1 { background: #1a1520; }
+    .p2 { background: #101520; }
+    .p3 { background: #15200e; }
+
+    /* PROJECT DETAIL SECTIONS */
+    .project-detail {
+      padding: 5rem 3rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .project-detail-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      margin-bottom: 1.5rem;
+    }
+
+    .project-detail-desc {
+      color: var(--muted);
+      max-width: 560px;
+      line-height: 1.8;
+      margin-bottom: 3rem;
+    }
+
+    .project-detail-gallery {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      max-width: 900px;
+    }
+
+    .project-detail-gallery img {
+      width: 100%;
+      display: block;
+      border-radius: 2px;
+      background: #fff;
+    }
+
+    .project-detail-gallery figcaption {
+      font-size: 0.78rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+      letter-spacing: 0.02em;
+    }
+
+    .project-detail-gallery figure {
+      margin-bottom: 0.5rem;
+    }
+
+    /* ABOUT */
+    #about {
+      padding: 6rem 3rem;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+
+    .about-label { margin-bottom: 2rem; }
+
+    .about-title {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.15;
+      margin-bottom: 1.5rem;
+    }
+
+    .about-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .about-body {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      max-width: 440px;
+    }
+
+    .about-body p + p { margin-top: 1rem; }
+
+    .about-img {
+      aspect-ratio: 3/4;
+      background: var(--bg2);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 5rem;
+      opacity: 0.12;
+      border: 1px solid var(--border);
+    }
+
+    /* CONTACT */
+    #contact {
+      padding: 6rem 3rem;
+      border-top: 1px solid var(--border);
+      text-align: center;
+    }
+
+    .contact-title {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      margin-bottom: 1.25rem;
+    }
+
+    .contact-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .contact-sub {
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      font-size: 0.95rem;
+    }
+
+    .contact-email {
+      display: inline-block;
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: var(--text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--accent);
+      padding-bottom: 2px;
+      transition: color 0.2s;
+    }
+
+    .contact-email:hover { color: var(--accent); }
+
+    /* FOOTER */
+    footer {
+      padding: 2rem 3rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* BACK TO TOP */
+    .back-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 40px;
+      height: 40px;
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      color: var(--muted);
+      font-size: 1rem;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, border-color 0.2s, color 0.2s;
+    }
+
+    .back-top.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .back-top:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* MOBILE */
+    .hamburger { display: none; background: none; border: none; color: var(--text); font-size: 1.4rem; cursor: pointer; }
+
+    @media (max-width: 768px) {
+      nav { padding: 1.25rem 1.5rem; }
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg); padding: 1.5rem; gap: 1.5rem; border-bottom: 1px solid var(--border); }
+      .nav-links.open { display: flex; }
+      .hamburger { display: block; }
+      .hero { padding: 5rem 1.5rem 3rem; }
+      #work { padding: 4rem 1.5rem; }
+      .projects { grid-template-columns: 1fr; }
+      .project-detail { padding: 4rem 1.5rem; }
+      #about { grid-template-columns: 1fr; padding: 4rem 1.5rem; }
+      .about-img { display: none; }
+      #contact { padding: 4rem 1.5rem; }
+      footer { padding: 1.5rem; flex-direction: column; gap: 0.5rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#hero">Maurt</a>
+    <button class="hamburger" aria-label="Menú" onclick="toggleMenu()">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#moonrakers">Moonrakers</a></li>
+      <li><a href="#isaac">The Binding of Isaac</a></li>
+      <li><a href="#spire">Slay the Spire</a></li>
+      <li><a href="#contact" class="contact-link">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <p class="hero-eyebrow">Illustrator &amp; visual artist</p>
+    <h1 class="hero-title">Mauricio<br><em>Ponce de León</em></h1>
+    <p class="hero-sub">Illustrations for games, cards and worlds. Bringing characters to life through line, shadow and color.</p>
+    <span class="hero-scroll">Scroll</span>
+  </section>
+
+  <!-- WORK -->
+  <section id="work">
+    <p class="section-label">Selected work</p>
+    <div class="projects">
+
+      <!-- Moonrakers -->
+      <a class="project-card p1" href="#moonrakers">
+        <!-- Portada pendiente: reemplaza este placeholder con tu imagen -->
+        <div class="project-placeholder">🚀</div>
+        <div class="project-always">
+          <p class="project-type">Card game illustration</p>
+          <h2 class="project-name">Moonrakers</h2>
+        </div>
+        <div class="project-info">
+          <p class="project-desc">Character and card illustrations for the sci-fi negotiation game Moonrakers.</p>
+        </div>
+      </a>
+
+      <!-- Binding of Isaac -->
+      <a class="project-card p2" href="#isaac">
+        <!-- Portada pendiente: reemplaza este placeholder con tu imagen -->
+        <div class="project-placeholder">⚔️</div>
+        <div class="project-always">
+          <p class="project-type">Fan art / illustration</p>
+          <h2 class="project-name">The Binding of Isaac:<br>Four Souls</h2>
+        </div>
+        <div class="project-info">
+          <p class="project-desc">Illustrated fan tribute to the beloved card game based on The Binding of Isaac universe.</p>
+        </div>
+      </a>
+
+      <!-- Slay the Spire -->
+      <a class="project-card p3" href="#spire">
+        <!-- Portada pendiente: reemplaza este placeholder con tu imagen -->
+        <div class="project-placeholder">🃏</div>
+        <div class="project-always">
+          <p class="project-type">Fan art / illustration</p>
+          <h2 class="project-name">Slay the Spire</h2>
+        </div>
+        <div class="project-info">
+          <p class="project-desc">Personal series of illustrations inspired by the roguelike deck-building game Slay the Spire.</p>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- MOONRAKERS DETAIL -->
+  <section id="moonrakers" class="project-detail">
+    <p class="section-label">Project — Moonrakers</p>
+    <h2 class="project-detail-title">Moonrakers</h2>
+    <p class="project-detail-desc">Ilustración de Crew Cards, Ship Cards y Objective Cards para Moonrakers, juego de negociación y comercio espacial. Diseño bilingüe inglés/español.</p>
+    <div class="project-detail-gallery">
+      <figure>
+        <img src="img/moonrakers-content.jpg" alt="Moonrakers — Crew Cards, Ship Cards y Objective Cards" />
+        <figcaption>Crew Cards, Ship Cards &amp; Objective Cards — EN/ES</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ISAAC DETAIL -->
+  <section id="isaac" class="project-detail">
+    <p class="section-label">Project — The Binding of Isaac</p>
+    <h2 class="project-detail-title">The Binding of Isaac:<br>Four Souls</h2>
+    <p class="project-detail-desc">Traducción y adaptación de cartas para Four Souls al español, manteniendo la fidelidad visual y tonal del juego original.</p>
+    <div class="project-detail-gallery">
+      <figure>
+        <img src="img/isaac-content.jpg" alt="The Binding of Isaac — Comparación ENGLISH / SPANISH" />
+        <figcaption>Comparación de cartas — English / Spanish</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- SLAY THE SPIRE DETAIL -->
+  <section id="spire" class="project-detail">
+    <p class="section-label">Project — Slay the Spire</p>
+    <h2 class="project-detail-title">Slay the Spire</h2>
+    <p class="project-detail-desc">Traducción y maquetación de Character Boards, Character Cards y Events Cards para la versión en español del juego de mesa.</p>
+    <div class="project-detail-gallery">
+      <figure>
+        <img src="img/spire-content-1.jpg" alt="Slay the Spire — Character Boards" />
+        <figcaption>Character Boards</figcaption>
+      </figure>
+      <figure>
+        <img src="img/spire-content-2.jpg" alt="Slay the Spire — Character Cards" />
+        <figcaption>Character Cards</figcaption>
+      </figure>
+      <figure>
+        <img src="img/spire-content-3.jpg" alt="Slay the Spire — Events Cards" />
+        <figcaption>Events Cards</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div>
+      <p class="section-label about-label">About</p>
+      <h2 class="about-title">Illustrator,<br><em>storyteller</em>,<br>world-builder.</h2>
+      <div class="about-body">
+        <p>Hola, soy Mauricio Ponce de León — ilustrador especializado en arte para juegos de cartas, personajes y mundos de fantasía.</p>
+        <p>Mi trabajo vive en la intersección entre narrativa visual y diseño. Si tienes un proyecto en mente, escríbeme.</p>
+      </div>
+    </div>
+    <div class="about-img">🎨</div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <p class="section-label" style="justify-content:center;">Contact</p>
+    <h2 class="contact-title">Let's work<br><em>together</em></h2>
+    <p class="contact-sub">Available for freelance illustration projects.</p>
+    <a class="contact-email" href="mailto:hola@maurt.com">hola@maurt.com</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <span>© 2025 Mauricio Ponce de León</span>
+    <span>Maurt</span>
+  </footer>
+
+  <!-- BACK TO TOP -->
+  <a class="back-top" href="#hero" id="backTop" aria-label="Volver arriba">↑</a>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+
+    window.addEventListener('scroll', () => {
+      const btn = document.getElementById('backTop');
+      if (window.scrollY > 400) btn.classList.add('visible');
+      else btn.classList.remove('visible');
+    });
+  </script>
+
+</body>
+</html>
